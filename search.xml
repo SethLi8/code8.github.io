@@ -4,11 +4,49 @@
   
     
     <entry>
+      <title>金刚经</title>
+      <link href="/post/a3a48d10.html"/>
+      <url>/post/a3a48d10.html</url>
+      
+        <content type="html"><![CDATA[<p> 应无所住，而生其心</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>markdown技巧</title>
       <link href="/post/3eba34df.html"/>
       <url>/post/3eba34df.html</url>
       
-        <content type="html"><![CDATA[<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><p><em>我是斜体</em><br><strong>加粗文字</strong></p><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><ul><li>无序列表1</li><li>无序列表2</li><li>无序列表3</li></ul><blockquote><p>应无所住，而生其心 –《金刚经》引用</p></blockquote><p>4个‘-’为分割线</p><hr><h3 id="markdown技巧"><a href="#markdown技巧" class="headerlink" title="markdown技巧"></a>markdown技巧</h3><ol><li><p><a href="https://blog.csdn.net/Yuki_fx/article/details/104122544">快捷键汇总</a></p></li><li><p>基本技巧</p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230609084918834.png" alt="基本技巧"></p><p><strong>粗体</strong> ctrl + B</p><p><em>斜体：ctrl + I</em></p><p><u>下划线：ctrl + U</u></p><h3 id="搭建图床技巧"><a href="#搭建图床技巧" class="headerlink" title="搭建图床技巧"></a>搭建图床技巧</h3><p><a href="https://zhuanlan.zhihu.com/p/489236769">使用Github+picGo搭建图床，保姆级教程来了 - 知乎 (zhihu.com)</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><p><em>我是斜体</em><br><strong>加粗文字</strong></p><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><ul><li>无序列表1</li><li>无序列表2</li><li>无序列表3</li></ul><blockquote><p>应无所住，而生其心 –《金刚经》引用</p></blockquote><p>4个‘-’为分割线</p><hr><h3 id="markdown技巧"><a href="#markdown技巧" class="headerlink" title="markdown技巧"></a>markdown技巧</h3><ol><li><p><a href="https://blog.csdn.net/Yuki_fx/article/details/104122544">快捷键汇总</a></p></li><li><p>基本技巧</p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230609084918834.png" alt="基本技巧"></p><p><strong>粗体</strong> ctrl + B</p><p><em>斜体：ctrl + I</em></p><p><u>下划线：ctrl + U</u></p><p>&#x3D;&#x3D;高亮&#x3D;&#x3D;：&#x3D;&#x3D;亮&#x3D;&#x3D;</p><h3 id="搭建图床技巧"><a href="#搭建图床技巧" class="headerlink" title="搭建图床技巧"></a>搭建图床技巧</h3><p><a href="https://zhuanlan.zhihu.com/p/489236769">使用Github+picGo搭建图床，保姆级教程来了 - 知乎 (zhihu.com)</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 博客技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>我是模板</title>
+      <link href="/post/3eba34df.html"/>
+      <url>/post/3eba34df.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
       
       
       <categories>
