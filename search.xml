@@ -17,11 +17,11 @@
     
     
     <entry>
-      <title>markdown技巧</title>
-      <link href="/post/3eba34df.html"/>
-      <url>/post/3eba34df.html</url>
+      <title>我是模板</title>
+      <link href="/post/7c5f0738.html"/>
+      <url>/post/7c5f0738.html</url>
       
-        <content type="html"><![CDATA[<p>[TOC]</p><p>目录： [TOC]</p><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><p><em>我是斜体</em><br><strong>加粗文字</strong></p><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><ul><li>无序列表1</li><li>无序列表2</li><li>无序列表3</li></ul><blockquote><p>应无所住，而生其心 –《金刚经》引用</p></blockquote><p>4个‘-’为分割线</p><hr><h3 id="markdown技巧"><a href="#markdown技巧" class="headerlink" title="markdown技巧"></a>markdown技巧</h3><ol><li><p><a href="https://blog.csdn.net/Yuki_fx/article/details/104122544">快捷键汇总</a></p></li><li><p>基本技巧</p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230609084918834.png" alt="基本技巧"></p><p><strong>粗体</strong> ctrl + B</p><p><em>斜体：ctrl + I</em></p><p><u>下划线：ctrl + U</u></p><p>&#x3D;&#x3D;高亮&#x3D;&#x3D;：&#x3D;&#x3D; &#x3D;&#x3D;</p><p>&#x3D;&#x3D;计算机&#x3D;&#x3D;</p><p>上标: s^2^      ^  text ^</p><p>下标：H<del>2</del>O  ~  text ~  </p><p>任务列表：</p><ul><li><input checked="" disabled="" type="checkbox"> 早饭</li><li><input checked="" disabled="" type="checkbox"> 午饭</li><li><input disabled="" type="checkbox"> 晚饭</li></ul><p>行内代码:  <code>int</code> <code>short long</code>  <!--整形--></p><p>代码块： ctrl + shift + k</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello markdown&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>表格： ctrl + T</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table><blockquote><p>引用：&gt;</p></blockquote><p><a href="http://localhost:4000/">超链接</a> ：ctrl + k</p><p><a href="http://bilibili.com/">哔哩哔哩</a></p><blockquote><p>ctrl + shift + Q</p></blockquote><hr><h3 id="搭建图床技巧"><a href="#搭建图床技巧" class="headerlink" title="搭建图床技巧"></a>搭建图床技巧</h3><p><a href="https://zhuanlan.zhihu.com/p/489236769">使用Github+picGo搭建图床，保姆级教程来了 - 知乎 (zhihu.com)</a></p>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
       
       <categories>
@@ -42,11 +42,11 @@
     
     
     <entry>
-      <title>我是模板</title>
-      <link href="/post/7c5f0738.html"/>
-      <url>/post/7c5f0738.html</url>
+      <title>markdown技巧</title>
+      <link href="/post/3eba34df.html"/>
+      <url>/post/3eba34df.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>[TOC]</p><p>目录： [TOC]</p><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><p><em>我是斜体</em><br><strong>加粗文字</strong></p><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><ul><li>无序列表1</li><li>无序列表2</li><li>无序列表3</li></ul><blockquote><p>应无所住，而生其心 –《金刚经》引用</p></blockquote><p>4个‘-’为分割线</p><hr><h3 id="markdown技巧"><a href="#markdown技巧" class="headerlink" title="markdown技巧"></a>markdown技巧</h3><ol><li><p><a href="https://blog.csdn.net/Yuki_fx/article/details/104122544">快捷键汇总</a></p></li><li><p>基本技巧</p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230609084918834.png" alt="基本技巧"></p><p><strong>粗体</strong> ctrl + B</p><p><em>斜体：ctrl + I</em></p><p><u>下划线：ctrl + U</u></p><p>&#x3D;&#x3D;高亮&#x3D;&#x3D;：&#x3D;&#x3D; &#x3D;&#x3D;</p><p>&#x3D;&#x3D;计算机&#x3D;&#x3D;</p><p>上标: s^2^      ^  text ^</p><p>下标：H<del>2</del>O  ~  text ~  </p><p>任务列表：</p><ul><li><input checked="" disabled="" type="checkbox"> 早饭</li><li><input checked="" disabled="" type="checkbox"> 午饭</li><li><input disabled="" type="checkbox"> 晚饭</li></ul><p>行内代码:  <code>int</code> <code>short long</code>  <!--整形--></p><p>代码块： ctrl + shift + k</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello markdown&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>表格： ctrl + T</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table><blockquote><p>引用：&gt;</p></blockquote><p><a href="http://localhost:4000/">超链接</a> ：ctrl + k</p><p><a href="http://bilibili.com/">哔哩哔哩</a></p><blockquote><p>ctrl + shift + Q</p></blockquote><hr><h3 id="搭建图床技巧"><a href="#搭建图床技巧" class="headerlink" title="搭建图床技巧"></a>搭建图床技巧</h3><p><a href="https://zhuanlan.zhihu.com/p/489236769">使用Github+picGo搭建图床，保姆级教程来了 - 知乎 (zhihu.com)</a></p>]]></content>
       
       
       <categories>
