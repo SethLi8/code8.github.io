@@ -13,16 +13,18 @@
       
       <categories>
           
-          <category> MySQL进阶篇 </category>
+          <category> MySQL </category>
+          
+          <category> 进阶篇 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 锁 </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> 锁 </tag>
             
         </tags>
       
@@ -49,9 +51,9 @@
       
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> 触发器 </tag>
+            
+            <tag> MySQL </tag>
             
         </tags>
       
