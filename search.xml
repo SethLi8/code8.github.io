@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Spark-RDD编程入门</title>
+      <link href="/post/ece8daf4.html"/>
+      <url>/post/ece8daf4.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="PySpark——RDD编程入门"><a href="#PySpark——RDD编程入门" class="headerlink" title="PySpark——RDD编程入门"></a>PySpark——RDD编程入门</h1><h2 id="1-程序执行入口SparkContext对象"><a href="#1-程序执行入口SparkContext对象" class="headerlink" title="1. 程序执行入口SparkContext对象"></a>1. 程序执行入口SparkContext对象</h2><p>Spark RDD 编程的程序入口对象是<code>SparkContext</code>对象(不论何种编程语言)</p><p>只有构建出<code>SparkContext</code>, 基于它才能执行后续的API调用和计算</p><p>本质上, <code>SparkContext</code>对编程来说, 主要功能就是创建第一个RDD出来</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入Spark相关包</span></span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 构建SparkConf对象</span></span><br><span class="line">    conf = SparkConf().setAppName (<span class="string">&quot;helloSpark&quot;</span>).setMaster(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line">    <span class="comment"># 构建SparkContext执行环境入口对象</span></span><br><span class="line">    sc = SparkContext(conf=conf)</span><br></pre></td></tr></table></figure><h2 id="2-2-RDD的创建"><a href="#2-2-RDD的创建" class="headerlink" title="2.2 RDD的创建"></a>2.2 RDD的创建</h2><p>RDD的创建主要有2种方式:</p><p>• <strong>通过并行化集合创建</strong> ( 本地对象 转 分布式RDD )</p><p>• <strong>读取外部数据源</strong> ( 读取文件 )</p><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230728224639737.png" alt="image-20230728224639737"></p><h3 id="2-2-1-并行化创建"><a href="#2-2-1-并行化创建" class="headerlink" title="2.2.1 并行化创建"></a>2.2.1 并行化创建</h3><p>概念：并行化创建，是指将本地集合转向分布式RDD，这一步就是分布式的开端：本地转分布式</p><p>API：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdd = spakcontext.parallelize(参数<span class="number">1</span>，参数<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 参数1 集合对象即可，比如list</span></span><br><span class="line"><span class="comment"># 参数2 分区数</span></span><br></pre></td></tr></table></figure><p>完整代码：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf,SparkContext</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 0. 构建Spark执行环境</span></span><br><span class="line">    conf = SparkConf().setAppName(<span class="string">&quot;create rdd&quot;</span>).setMaster(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line">    sc = SparkContext(conf=conf)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># sc 对象的parallelize方法，可以将本地集合转换成RDD返回给你</span></span><br><span class="line">    data = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]</span><br><span class="line">    rdd = sc.parallelize(data,numSlices=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(rdd.collect())</span><br></pre></td></tr></table></figure><p>执行结果：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Setting default log level to &quot;WARN&quot;.</span><br><span class="line">To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spark </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Spark </tag>
+            
+            <tag> RDD </tag>
+            
+            <tag> PySpark </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>黑马虚拟机环境搭建</title>
       <link href="/post/7e0e2864.html"/>
       <url>/post/7e0e2864.html</url>
