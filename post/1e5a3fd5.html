@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Pyspark-SparkSQL | 靓仔阿胜的博客</title><meta name="author" content="靓仔阿胜"><meta name="copyright" content="靓仔阿胜"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="3.PySpark-SparkSQL 在Spark上运用SQL处理结构化数据  3.1 SparkSQL快速入门3.1.1 什么是SparkSQL SparkSQL是Spark的一个模块，用于处理海量结构化数据 限定：结构化数据处理 3.1.2 为什么要学习SparkSQL SparkSQL是非常成熟的 海量结构化数据处理框架。 学习SparkSQL主要在2个点:  SparkSQL本身十分优秀,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pyspark-SparkSQL">
+<meta property="og:url" content="https://sql88.github.io/post/1e5a3fd5.html">
+<meta property="og:site_name" content="靓仔阿胜的博客">
+<meta property="og:description" content="3.PySpark-SparkSQL 在Spark上运用SQL处理结构化数据  3.1 SparkSQL快速入门3.1.1 什么是SparkSQL SparkSQL是Spark的一个模块，用于处理海量结构化数据 限定：结构化数据处理 3.1.2 为什么要学习SparkSQL SparkSQL是非常成熟的 海量结构化数据处理框架。 学习SparkSQL主要在2个点:  SparkSQL本身十分优秀,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sql88.github.io/img/avatar1.jpg">
+<meta property="article:published_time" content="2023-08-19T09:22:00.000Z">
+<meta property="article:modified_time" content="2023-08-19T11:51:15.404Z">
+<meta property="article:author" content="靓仔阿胜">
+<meta property="article:tag" content="SparkSQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sql88.github.io/img/avatar1.jpg"><link rel="shortcut icon" href="/img/as4.png"><link rel="canonical" href="https://sql88.github.io/post/1e5a3fd5.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":500,"languages":{"author":"作者: 靓仔阿胜","link":"链接: ","source":"来源: 靓仔阿胜的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Pyspark-SparkSQL',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-19 19:51:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/background1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="靓仔阿胜的博客"><span class="site-name">靓仔阿胜的博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Pyspark-SparkSQL</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-19T09:22:00.000Z" title="发表于 2023-08-19 17:22:00">2023-08-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-19T11:51:15.404Z" title="更新于 2023-08-19 19:51:15">2023-08-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/">Spark</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Pyspark-SparkSQL"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="3-PySpark-SparkSQL"><a href="#3-PySpark-SparkSQL" class="headerlink" title="3.PySpark-SparkSQL"></a>3.PySpark-SparkSQL</h1><blockquote>
+<p>在Spark上运用SQL处理结构化数据</p>
+</blockquote>
+<h2 id="3-1-SparkSQL快速入门"><a href="#3-1-SparkSQL快速入门" class="headerlink" title="3.1 SparkSQL快速入门"></a>3.1 SparkSQL快速入门</h2><h3 id="3-1-1-什么是SparkSQL"><a href="#3-1-1-什么是SparkSQL" class="headerlink" title="3.1.1 什么是SparkSQL"></a>3.1.1 什么是SparkSQL</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819174120604.png" alt="image-20230819174120604"></p>
+<p>SparkSQL是Spark的一个模块，用于<font color='red' size=4>处理海量结构化数据</font></p>
+<p>限定：结构化数据处理</p>
+<h3 id="3-1-2-为什么要学习SparkSQL"><a href="#3-1-2-为什么要学习SparkSQL" class="headerlink" title="3.1.2 为什么要学习SparkSQL"></a>3.1.2 为什么要学习SparkSQL</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819173142314.png" alt="image-20230819173142314"></p>
+<p>SparkSQL是非常成熟的 海量结构化数据处理框架。</p>
+<p>学习SparkSQL主要在2个点:</p>
+<ol>
+<li>SparkSQL本身十分优秀, 支持SQL语、性能强、可以自动优化、API简单、兼容HIVE等等</li>
+<li>企业大面积在使用SparkSQL处理业务数据</li>
+</ol>
+<ul>
+<li><pre><code>离线开发
+</code></pre>
+</li>
+<li>​	 数仓搭建</li>
+<li>​	 科学计算</li>
+<li>​	 数据分析</li>
+</ul>
+<h3 id="3-1-3-SparkSQL特点"><a href="#3-1-3-SparkSQL特点" class="headerlink" title="3.1.3 SparkSQL特点"></a>3.1.3 SparkSQL特点</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819174237330.png" alt="image-20230819174237330"></p>
+<h3 id="3-1-4-SparkSQL发展史"><a href="#3-1-4-SparkSQL发展史" class="headerlink" title="3.1.4 SparkSQL发展史"></a>3.1.4 SparkSQL发展史</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819174207223.png" alt="image-20230819174207223"></p>
+<p>在许多年前(2012\2013左右)Hive逐步火热起来, 大片抢占分布式SQL计算市场</p>
+<p>Spark作为通用计算框架, 也不可能放弃这一细分领域.</p>
+<p>于是, Spark官方模仿Hive推出了Shark框架(Spark 0.9版本)</p>
+<p>Shark框架是几乎100%模仿Hive, 内部的配置项\优化项等都是直接模仿而来.</p>
+<p>不同点在于将执行引擎由MapReduce更换为了Spark.</p>
+<p>因为Shark框架太模仿Hive, Hive是针对MR优化, 很多地方和SparkCore(RDD)水土不服, 最终被放弃</p>
+<p>Spark官方下决心开发一个自己的分布式SQL引擎 也就是诞生了现在的SparkSQL</p>
+<hr>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819173814501.png" alt="image-20230819173814501"></p>
+<p>● 2014年 1.0正式发布</p>
+<p>● 2015年 1.3 发布DataFrame数据结构, 沿用至今</p>
+<p>● 2016年 1.6 发布Dataset数据结构(带泛型的DataFrame), 适用于支持泛型的语言(Java\Scala)</p>
+<p>● 2016年 2.0 统一了Dataset 和 DataFrame, 以后只有Dataset了, Python用的DataFrame就是 没有泛型的Dataset</p>
+<p>● 2019年 3.0 发布， 性能大幅度提升，SparkSQL变化不大</p>
+<h3 id="3-1-5-总结"><a href="#3-1-5-总结" class="headerlink" title="3.1.5 总结"></a>3.1.5 总结</h3><blockquote>
+<ol>
+<li><p>SparkSQL用于处理大规模结构化数据的计算引擎</p>
+</li>
+<li><p>SparkSQL在企业中广泛使用，并性能极好，学习它不管是工作还是就业都有很大帮助</p>
+</li>
+<li><p>SparkSQL：使用简单、API统一、兼容HIVE、支持标准化JDBC和ODBC连接</p>
+</li>
+<li><p>SparkSQL 2014年正式发布，当下使用最多的2.0版，Spark发布于2016年，当下使用的最新3.0办发布于2019年</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="3-2-SparkSQL概述"><a href="#3-2-SparkSQL概述" class="headerlink" title="3.2 SparkSQL概述"></a>3.2 SparkSQL概述</h2><h3 id="3-2-1-SparkSQL和Hive的异同"><a href="#3-2-1-SparkSQL和Hive的异同" class="headerlink" title="3.2.1 SparkSQL和Hive的异同"></a>3.2.1 SparkSQL和Hive的异同</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819190806954.png" alt="image-20230819190806954"></p>
+<ul>
+<li><strong>Hive和Spark均是：“分布式SQL计算引擎”</strong></li>
+<li><strong>均是构建大规模结构化数据计算的绝佳利器，同时SparkSQL拥有更好的性能。</strong></li>
+<li><strong>目前，企业中使用Hive仍旧居多，但SparkSQL将会在很近的未来替代Hive成为分布式SQL计算市场的顶级</strong></li>
+</ul>
+<h3 id="3-2-2-SparkSQL的数据抽象"><a href="#3-2-2-SparkSQL的数据抽象" class="headerlink" title="3.2.2 SparkSQL的数据抽象"></a>3.2.2 SparkSQL的数据抽象</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819191543792.png" alt="image-20230819191543792"></p>
+<hr>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819191526430.png" alt="image-20230819191526430"></p>
+<h3 id="3-2-3-SparkSQL数据抽象的发展"><a href="#3-2-3-SparkSQL数据抽象的发展" class="headerlink" title="3.2.3 SparkSQL数据抽象的发展"></a>3.2.3 SparkSQL数据抽象的发展</h3><p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819191713814.png" alt="image-20230819191713814"></p>
+<blockquote>
+<p>从SparkSQL的发展历史可以看到：</p>
+<p>14年最早的数据抽象是：SchemaRDD（内部存储二维表数据结构的RDD），SchemaRDD就是魔改的RDD，将RDD支持的存储数据，限定</p>
+<p>为二维表数据结构用以支持SQL查询。由于是魔改RDD，只是一个过渡产品，现已废弃。</p>
+<p>15年发布DataFrame对象，基于Pandas的DataFrame（模仿）独立于RDD进行实现，将数据以二维表结构进行存储并支持分布式运行</p>
+<p>16年发布DataSet对象，在DataFrame之上添加了泛型的支持，用以更好的支持Java和Scala这两个支持泛型的编程语言</p>
+<p>16年，Spark2.0版本，将DataFrame和DataSet进行合并。其底层均是DataSet对象，但在Python和R语言到用时，显示为DataFrame对象。和老的DataFrame对象没有区别</p>
+</blockquote>
+<h3 id="3-2-4-DataFrame概述"><a href="#3-2-4-DataFrame概述" class="headerlink" title="3.2.4 DataFrame概述"></a>3.2.4 DataFrame概述</h3><p>DataFrame和RDD都是：弹性的、分布式的、数据集</p>
+<p>只是，DataFrame存储的数据结构“限定”为：<code>二维表结构化数据</code></p>
+<p>而RDD可以存储的数据则<code>没有任何限制</code>，想处理什么就处理什么</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819192349796.png" alt="image-20230819192349796"></p>
+<hr>
+<p>假定有如下数据集：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819193133157.png" alt="image-20230819193133157"></p>
+<p><strong>DataFrame按二维表存储：</strong></p>
+<p>​	<img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819193144162.png" alt="image-20230819193144162"></p>
+<p><strong>RDD按数组对象存储：</strong><br>            <img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819193159002.png" alt="image-20230819193159002"></p>
+<ul>
+<li>DataFrame 是按照二维表格的形式存储数据</li>
+<li>RDD则是存储对象本身</li>
+</ul>
+<h3 id="3-2-5-SparkSession对象"><a href="#3-2-5-SparkSession对象" class="headerlink" title="3.2.5 SparkSession对象"></a>3.2.5 SparkSession对象</h3><p>在RDD阶段，程序的执行入口对象是： SparkContext</p>
+<p>在Spark 2.0后，推出了SparkSession对象，作为Spark编码的统一入口对象。</p>
+<p>SparkSession对象可以：</p>
+<ul>
+<li><p>用于SparkSQL编程作为入口对象</p>
+</li>
+<li><p>用于SparkCore编程，可以通过SparkSession对象中获取到SparkContext</p>
+<p><font color='red'>所以，我们后续的代码，执行环境入口对象，统一变更为SparkSession对象</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819193053095.png" alt="image-20230819193053095"></p>
+<hr>
+<p><font color='red'>现在，来体验一下构建执行环境入口对象：SparkSession</font></p>
+<p><font color='red'>构建SparkSession核心代码</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Sql88/BlogImg@main/img/image-20230819193407862.png" alt="image-20230819193407862"></p>
+<p>应该是.master(“local[*]”)，见下文代码</p>
+</li>
+</ul>
+<h3 id="3-2-6-SparkSQL-HelloWorld"><a href="#3-2-6-SparkSQL-HelloWorld" class="headerlink" title="3.2.6 SparkSQL HelloWorld"></a>3.2.6 SparkSQL HelloWorld</h3><p>需求：读取文件，找出学科为“语文”的数据，并限制输出5条</p>
+<p>where subject &#x3D; ‘语文’ limit 5</p>
+<p>代码演示：<code>00_spark_session_create.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SparkSession对象的导包，对象是来自于pyspark.sql包中</span></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 构建SparkSession执行环境入口对象</span></span><br><span class="line">    spark = SparkSession.builder. \</span><br><span class="line">        appName(<span class="string">&quot;00_spark_session_create.py&quot;</span>). \</span><br><span class="line">        master(<span class="string">&quot;local[*]&quot;</span>). \</span><br><span class="line">        getOrCreate()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通过SparkSession对象，获取SparkContext对象</span></span><br><span class="line">    sc = spark.sparkContext</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SparkSQL的HelloWorld</span></span><br><span class="line">    df = spark.read.csv(<span class="string">&quot;../data/input/stu_score.txt&quot;</span>, sep=<span class="string">&#x27;,&#x27;</span>, header=<span class="literal">False</span>)</span><br><span class="line">    df2 = df.toDF(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;score&quot;</span>)</span><br><span class="line">    df2.printSchema() <span class="comment"># 打印表结构</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;读取并打印数据&quot;</span>)</span><br><span class="line">    df2.show() <span class="comment"># 显示数据</span></span><br><span class="line"></span><br><span class="line">    df2.createTempView(<span class="string">&quot;score&quot;</span>) <span class="comment"># 构建score表</span></span><br><span class="line">    <span class="comment"># SQL风格</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SQL 风格结果:&quot;</span>)</span><br><span class="line">    spark.sql(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        select * from score where name =&#x27;语文&#x27; limit 5</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>).show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># DSL 风格</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;DSL 风格结果:&quot;</span>)</span><br><span class="line">    df2.where(<span class="string">&quot;name=&#x27;语文&#x27;&quot;</span>).limit(<span class="number">5</span>).show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- id: string (nullable = true)</span><br><span class="line"> |-- name: string (nullable = true)</span><br><span class="line"> |-- score: string (nullable = true)</span><br><span class="line"></span><br><span class="line">读取并打印数据</span><br><span class="line">+---+----+-----+</span><br><span class="line">| id|name|score|</span><br><span class="line">+---+----+-----+</span><br><span class="line">|  1|语文|   99|</span><br><span class="line">|  2|语文|   99|</span><br><span class="line">|  3|语文|   99|</span><br><span class="line">|  4|语文|   99|</span><br><span class="line">|  5|语文|   99|</span><br><span class="line">|  6|语文|   99|</span><br><span class="line">|  7|语文|   99|</span><br><span class="line">|  8|语文|   99|</span><br><span class="line">|  9|语文|   99|</span><br><span class="line">| 10|语文|   99|</span><br><span class="line">| 11|语文|   99|</span><br><span class="line">| 12|语文|   99|</span><br><span class="line">| 13|语文|   99|</span><br><span class="line">| 14|语文|   99|</span><br><span class="line">| 15|语文|   99|</span><br><span class="line">| 16|语文|   99|</span><br><span class="line">| 17|语文|   99|</span><br><span class="line">| 18|语文|   99|</span><br><span class="line">| 19|语文|   99|</span><br><span class="line">| 20|语文|   99|</span><br><span class="line">+---+----+-----+</span><br><span class="line">only showing top 20 rows</span><br><span class="line"></span><br><span class="line">SQL 风格结果:</span><br><span class="line">+---+----+-----+</span><br><span class="line">| id|name|score|</span><br><span class="line">+---+----+-----+</span><br><span class="line">|  1|语文|   99|</span><br><span class="line">|  2|语文|   99|</span><br><span class="line">|  3|语文|   99|</span><br><span class="line">|  4|语文|   99|</span><br><span class="line">|  5|语文|   99|</span><br><span class="line">+---+----+-----+</span><br><span class="line"></span><br><span class="line">DSL 风格结果:</span><br><span class="line">+---+----+-----+</span><br><span class="line">| id|name|score|</span><br><span class="line">+---+----+-----+</span><br><span class="line">|  1|语文|   99|</span><br><span class="line">|  2|语文|   99|</span><br><span class="line">|  3|语文|   99|</span><br><span class="line">|  4|语文|   99|</span><br><span class="line">|  5|语文|   99|</span><br><span class="line">+---+----+-----+</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-7-总结"><a href="#3-2-7-总结" class="headerlink" title="3.2.7 总结"></a>3.2.7 总结</h3><blockquote>
+<ol>
+<li><p>SparkSQL 和 Hive同样，都是用于大规模SQL分布式计算的计算框架，均可以运行在YARN之上，在企业中广泛被应用</p>
+</li>
+<li><p>SparkSQL的数据抽象为：SchemaRDD（废弃）、DataFrame（Python、R、Java、Scala）、DataSet（Java、Scala）。</p>
+</li>
+<li><p>DataFrame同样是分布式数据集，有分区可以并行计算，和RDD不同的是，DataFrame中存储的数据结构是以表格形式组织的，方便进行SQL计算</p>
+</li>
+<li><p>DataFrame对比DataSet基本相同，不同的是DataSet支持泛型特性，可以让Java、Scala语言更好的利用到。</p>
+</li>
+<li><p>SparkSession是2.0后推出的新执行环境入口对象，可以用于RDD、SQL等编程</p>
+</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://sql88.github.io">靓仔阿胜</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sql88.github.io/post/1e5a3fd5.html">https://sql88.github.io/post/1e5a3fd5.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sql88.github.io" target="_blank">靓仔阿胜的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SparkSQL/">SparkSQL</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/post/ece8daf4.html" title="PySpark-核心编程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">PySpark-核心编程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">靓仔阿胜</div><div class="author-info__description">SqlBoy 的天堂</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Sql88/Sql88.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://githubfast.com/Sql88" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_42577508" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1131977233&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:1131977233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope-open-text"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">I am a SQlBoy</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#3-PySpark-SparkSQL"><span class="toc-text">3.PySpark-SparkSQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-SparkSQL%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-text">3.1 SparkSQL快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E4%BB%80%E4%B9%88%E6%98%AFSparkSQL"><span class="toc-text">3.1.1 什么是SparkSQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0SparkSQL"><span class="toc-text">3.1.2 为什么要学习SparkSQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-SparkSQL%E7%89%B9%E7%82%B9"><span class="toc-text">3.1.3 SparkSQL特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-SparkSQL%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="toc-text">3.1.4 SparkSQL发展史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-5-%E6%80%BB%E7%BB%93"><span class="toc-text">3.1.5 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-SparkSQL%E6%A6%82%E8%BF%B0"><span class="toc-text">3.2 SparkSQL概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-SparkSQL%E5%92%8CHive%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-text">3.2.1 SparkSQL和Hive的异同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-SparkSQL%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8A%BD%E8%B1%A1"><span class="toc-text">3.2.2 SparkSQL的数据抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-SparkSQL%E6%95%B0%E6%8D%AE%E6%8A%BD%E8%B1%A1%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-text">3.2.3 SparkSQL数据抽象的发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-4-DataFrame%E6%A6%82%E8%BF%B0"><span class="toc-text">3.2.4 DataFrame概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-5-SparkSession%E5%AF%B9%E8%B1%A1"><span class="toc-text">3.2.5 SparkSession对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-6-SparkSQL-HelloWorld"><span class="toc-text">3.2.6 SparkSQL HelloWorld</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-7-%E6%80%BB%E7%BB%93"><span class="toc-text">3.2.7 总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1e5a3fd5.html" title="Pyspark-SparkSQL">Pyspark-SparkSQL</a><time datetime="2023-08-19T09:22:00.000Z" title="发表于 2023-08-19 17:22:00">2023-08-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/ece8daf4.html" title="PySpark-核心编程">PySpark-核心编程</a><time datetime="2023-08-02T02:23:00.000Z" title="发表于 2023-08-02 10:23:00">2023-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7e0e2864.html" title="黑马虚拟机环境搭建">黑马虚拟机环境搭建</a><time datetime="2023-07-23T09:16:00.000Z" title="发表于 2023-07-23 17:16:00">2023-07-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/0.html" title="Informer介绍">Informer介绍</a><time datetime="2023-06-23T12:32:00.000Z" title="发表于 2023-06-23 20:32:00">2023-06-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d41aa08f.html" title="5-锁">5-锁</a><time datetime="2023-06-18T07:38:00.000Z" title="发表于 2023-06-18 15:38:00">2023-06-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/background1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 靓仔阿胜</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  function abcjsInit() {
+    function abcjsFn() {
+      for (let abcContainer of document.getElementsByClassName("abc-music-sheet")) {
+        ABCJS.renderAbc(abcContainer, abcContainer.innerHTML, {responsive: 'resize'})
+      }
+    }
+    
+    typeof ABCJS === 'object' ? abcjsFn()
+      : getScript('https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js').then(abcjsFn)
+  }
+
+  window.pjax ? abcjsInit() : document.addEventListener('DOMContentLoaded', abcjsInit)
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
